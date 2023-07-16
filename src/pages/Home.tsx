@@ -10,7 +10,7 @@ export default function Home() {
       <div className="flex justify-between items-center h-[calc(100vh-80px)] max-w-7xl mx-auto ">
         <div>
           <h1 className="text-6xl font-black text-primary mb-2">
-            HAYLOU <br /> SOLAR PLUSE
+            HIAKO <br /> Book Catalog
           </h1>
           <p className="text-secondary font-semibold text-xl">
             Effortless communication at your fingertips

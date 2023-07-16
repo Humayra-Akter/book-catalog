@@ -5,18 +5,14 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { IBook } from '@/types/globalTypes';
+import { useAppSelector } from '@/redux/hook';
 
 import { useState } from 'react';
 
 export default function Checkout() {
   const [scheduled, setScheduled] = useState<boolean>(false);
 
-  //! Dummy Data
-
-  const books: IBook[] = [];
-
-  //! **
+  const { books } = useAppSelector((state) => state.cart);
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10 text-primary">
@@ -131,7 +127,7 @@ export default function Checkout() {
               <p>Total</p>
               <p>81.95$</p>
             </div>
-            <Button className="w-full">Checkout</Button>
+            <Button className="w-full bg-blue-700">Checkout</Button>
           </div>
         </div>
       </div>
