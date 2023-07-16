@@ -4,7 +4,7 @@ import MainLayout from './layouts/MainLayout';
 import { useAppDispatch } from './redux/hook';
 import { setLoading, setUser } from './redux/features/user/userSlice';
 import { onAuthStateChanged } from 'firebase/auth';
-import auth from './firebase.init';
+import { auth } from './firebase.init';
 
 function App() {
   const dispatch = useAppDispatch();

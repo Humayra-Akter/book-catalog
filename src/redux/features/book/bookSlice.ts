@@ -25,5 +25,4 @@ const bookSlice = createSlice({
 });
 
 export const { toggleState, setPriceRange } = bookSlice.actions;
-
 export default bookSlice.reducer;
