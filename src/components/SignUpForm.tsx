@@ -1,29 +1,40 @@
 'use client';
-
+import { FcGoogle } from 'react-icons/fc';
 import * as React from 'react';
-
+import { useForm } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { createUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase.init';
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
+interface SignupFormInputs {
+  email: string;
+  password: string;
+}
+
 export function SignupForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupFormInputs>();
+  const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
+  const dispatch = useAppDispatch();
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
+  const onSubmit = (data: SignupFormInputs) => {
+    console.log(data);
+    dispatch(createUser({ email: data.email, password: data.password }));
+  };
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
@@ -36,29 +47,27 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading}
+              {...register('email', { required: 'Email is required' })}
             />
+            {errors.email && <p>{errors.email.message}</p>}
             <Input
               id="password"
               placeholder="your password"
               type="password"
               autoCapitalize="none"
               autoCorrect="off"
-              disabled={isLoading}
-            />
+              {...register('password', { required: 'Password is required' })}
+            />{' '}
+            {errors.password && <p>{errors.password.message}</p>}
             <Input
               id="password"
               placeholder="confirm password"
               type="password"
               autoCapitalize="none"
               autoCorrect="off"
-              disabled={isLoading}
             />
           </div>
-          <Button disabled={isLoading}>
-            {isLoading && <p>loading</p>}
-            Create Account
-          </Button>
+          <Button className="bg-blue-800">Create Account</Button>
         </div>
       </form>
       <div className="relative">
@@ -71,8 +80,14 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading ? <p>loading</p> : <p>GitHub</p>}
+      <Button
+        variant="outline"
+        type="button"
+        onClick={() => signInWithGoogle()}
+        className="flex items-center justify-between"
+      >
+        <p>Google</p>
+        <FcGoogle />
       </Button>
     </div>
   );
