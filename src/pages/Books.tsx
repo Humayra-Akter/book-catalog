@@ -8,7 +8,7 @@ import { IBook } from '@/types/globalTypes';
 import { useGetBooksQuery } from '@/redux/features/book/bookApi';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-export default function Products() {
+export default function Books() {
   const { data, isLoading, error } = useGetBooksQuery(undefined);
 
   const { toast } = useToast();
