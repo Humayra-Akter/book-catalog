@@ -22,16 +22,16 @@ export default function Books() {
   let booksData;
 
   if (status) {
-    booksData = data?.filter(
+    booksData = data?.data?.filter(
       (item: { status: boolean; price: number }) =>
         item.status === true && item.price < priceRange
     );
   } else if (priceRange > 0) {
-    booksData = data?.filter(
+    booksData = data?.data?.filter(
       (item: { price: number }) => item.price < priceRange
     );
   } else {
-    booksData = data;
+    booksData = data?.data;
   }
 
   return (
