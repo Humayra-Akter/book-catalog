@@ -12,15 +12,16 @@ import {
   HiOutlineTrash,
 } from 'react-icons/hi';
 import { Button } from './ui/button';
-import { IBook } from '@/types/globalTypes';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import {
+  addToCart,
+  removeFromCart,
+  removeOne,
+} from '@/redux/features/cart/cartSlice';
 
 export default function Cart() {
-  //! Dummy data
-
-  const books: IBook[] = [];
-  const total = 0;
-
-  //! **
+  const { books, total } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
   return (
     <Sheet>
@@ -35,27 +36,28 @@ export default function Cart() {
           <h1>Total: {total.toFixed(2)}</h1>
         </SheetHeader>
         <div className="space-y-5">
-          {books.map((books) => (
+          {books.map((book) => (
             <div
               className="border h-44 p-5 flex justify-between rounded-md"
-              key={books.title}
+              key={book.title}
             >
               <div className="border-r pr-5 shrink-0"></div>
               <div className="px-2 w-full flex flex-col gap-3">
-                <h1 className="text-2xl self-center">{books?.title}</h1>
-                <p>Quantity: {books.quantity}</p>
+                <h1 className="text-2xl self-center">{book?.title}</h1>
+                <p>Quantity: {book.quantity}</p>
                 <p className="text-xl">
-                  Total Price: {(books.price * books.quantity!).toFixed(2)} $
+                  Total Price: {(book.price * book.quantity!).toFixed(2)} $
                 </p>
               </div>
               <div className="border-l pl-5 flex flex-col justify-between">
-                <Button>
+                <Button onClick={() => dispatch(addToCart(book))}>
                   <HiOutlinePlus size="20" />
                 </Button>
-                <Button>
+                <Button onClick={() => dispatch(removeOne(book))}>
                   <HiMinus size="20" />
                 </Button>
                 <Button
+                  onClick={() => dispatch(removeFromCart(book))}
                   variant="destructive"
                   className="bg-red-500 hover:bg-red-400"
                 >
