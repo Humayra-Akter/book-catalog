@@ -3,38 +3,33 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
+import { setPriceRange, toggleState } from '@/redux/features/book/bookSlice';
 import { IBook } from '@/types/globalTypes';
-import { useEffect, useState } from 'react';
+import { useGetBooksQuery } from '@/redux/features/book/bookApi';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-export default function Books() {
-  const [data, setData] = useState<IBook[]>([]);
-  useEffect(() => {
-    fetch('./data.json')
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, []);
+export default function Products() {
+  const { data, isLoading, error } = useGetBooksQuery(undefined);
 
   const { toast } = useToast();
 
-  //! Dummy Data
-
-  const status = true;
-  const priceRange = 100;
-
-  //! **
+  const { priceRange, status } = useAppSelector((state) => state.book);
+  const dispatch = useAppDispatch();
 
   const handleSlider = (value: number[]) => {
-    console.log(value);
+    dispatch(setPriceRange(value[0]));
   };
-
   let booksData;
 
   if (status) {
-    booksData = data.filter(
-      (item) => item.status === true && item.price < priceRange
+    booksData = data?.filter(
+      (item: { status: boolean; price: number }) =>
+        item.status === true && item.price < priceRange
     );
   } else if (priceRange > 0) {
-    booksData = data.filter((item) => item.price < priceRange);
+    booksData = data?.filter(
+      (item: { price: number }) => item.price < priceRange
+    );
   } else {
     booksData = data;
   }
@@ -49,7 +44,10 @@ export default function Books() {
           >
             Availability
           </h1>
-          <div className="flex items-center space-x-2 mt-3">
+          <div
+            onClick={() => dispatch(toggleState())}
+            className="flex items-center space-x-2 mt-3"
+          >
             <Switch id="in-stock" />
             <Label htmlFor="in-stock">In stock</Label>
           </div>
@@ -69,7 +67,7 @@ export default function Books() {
         </div>
       </div>
       <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-        {booksData?.map((book) => (
+        {booksData?.map((book: IBook) => (
           <BookCard book={book} />
         ))}
       </div>

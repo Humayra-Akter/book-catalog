@@ -26,7 +26,9 @@ export default function Signup() {
             }}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
-            <img className="h-8" src={logo} alt="" />
+            <Link to="/">
+              <img className="h-8" src={logo} alt="" />
+            </Link>
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2"></blockquote>
@@ -50,8 +52,8 @@ export default function Signup() {
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
-              </Link>{' '}
-              and{' '}
+              </Link>
+              and
               <Link
                 to="/privacy"
                 className="underline underline-offset-4 hover:text-primary"
