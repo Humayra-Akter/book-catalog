@@ -117,15 +117,15 @@ export default function Checkout() {
           <div className="space-y-2">
             <div className="flex justify-between text-lg">
               <p>Subtotal</p>
-              <p>77.90$</p>
+              <p>0$</p>
             </div>
             <div className="flex justify-between text-lg">
               <p>Delivery</p>
-              <p>4.5$</p>
+              <p>0$</p>
             </div>
             <div className="flex justify-between text-xl font-bold">
               <p>Total</p>
-              <p>81.95$</p>
+              <p>0$</p>
             </div>
             <Button className="w-full bg-blue-700">Checkout</Button>
           </div>
