@@ -5,7 +5,7 @@ interface IBook {
   status: boolean;
   publication_date: string;
   searchQuery: string;
-  recentlyAddedBooks: object[];
+  recentlyAddedBooks: string[];
 }
 
 const initialState: IBook = {

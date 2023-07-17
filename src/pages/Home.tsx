@@ -7,26 +7,23 @@ import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useEffect } from 'react';
 import { setRecentlyAddedBooks } from '@/redux/features/book/bookSlice';
 import { IBook } from '@/types/globalTypes';
+import { useGetBooksQuery } from '@/redux/features/book/bookApi';
 
 export default function Home() {
   const dispatch = useAppDispatch();
   const { recentlyAddedBooks } = useAppSelector((state) => state.book) as {
-    recentlyAddedBooks: IBook[];
+    recentlyAddedBooks: string[];
   };
+  const { data, isLoading, error } = useGetBooksQuery(undefined);
 
   useEffect(() => {
-    const fetchLatestBooks = async () => {
-      try {
-        const response = await fetch('/books/latest');
-        const data = await response.json();
-        dispatch(setRecentlyAddedBooks(data));
-      } catch (error) {
-        console.error('Failed to fetch latest books:', error);
-      }
-    };
-
-    fetchLatestBooks();
-  }, [dispatch]);
+    if (data?.data) {
+      const latestBookTitles = data.data
+        .slice(0, 10)
+        .map((book: IBook) => book.title);
+      dispatch(setRecentlyAddedBooks(latestBookTitles));
+    }
+  }, [data, dispatch]);
 
   return (
     <>
@@ -48,11 +45,15 @@ export default function Home() {
           <Button className="mt-5 bg-blue-800 w-full h-8">Learn more</Button>
         </div>
       </div>
-      <div>
-        <h2>Latest Books:</h2>
-        <ul>
-          {recentlyAddedBooks.map((book) => (
-            <li key={book._id}>{book.title}</li>
+      <div className="py-20">
+        <h2 className="text-3xl text-center text-blue-900 font-black mb-2">
+          Latest Books:
+        </h2>
+        <ul className="text-center font-bold mb-2">
+          {recentlyAddedBooks.map((title, index) => (
+            <li key={index}>
+              {index + 1}. {title}
+            </li>
           ))}
         </ul>
       </div>
