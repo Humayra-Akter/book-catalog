@@ -58,16 +58,16 @@ export default function Home() {
         </ul>
       </div>
       <div className="mb-96">
-        <div>
-          <img className="mx-auto" src={hero} alt="" />
-        </div>
         <div className="flex flex-col items-center justify-center">
-          <h1 className="text-5xl font-black text-primary uppercase mt-10">
+          <h1 className="text-5xl font-black text-blue-900 uppercase mt-10">
             The house of knowledge is here
           </h1>
           <Button className="mt-10 bg-blue-800 w-1/3 h-8" asChild>
             <Link to="/books">Brows all books</Link>
           </Button>
+          <div className="pt-24">
+            <img className="mx-auto" src={hero} alt="" />
+          </div>
         </div>
       </div>
       <Footer />
