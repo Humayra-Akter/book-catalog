@@ -84,7 +84,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
         variant="outline"
         type="button"
         onClick={() => signInWithGoogle()}
-        className="flex items-center justify-between"
+        className="items-center justify-between"
       >
         <p>Google</p>
         <FcGoogle />

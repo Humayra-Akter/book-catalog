@@ -3,8 +3,31 @@ import banner from '@/assets/images/banner.png';
 import hero from '@/assets/images/hero.png';
 import { Link } from 'react-router-dom';
 import Footer from '@/layouts/Footer';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useEffect } from 'react';
+import { setRecentlyAddedBooks } from '@/redux/features/book/bookSlice';
+import { IBook } from '@/types/globalTypes';
 
 export default function Home() {
+  const dispatch = useAppDispatch();
+  const { recentlyAddedBooks } = useAppSelector((state) => state.book) as {
+    recentlyAddedBooks: IBook[];
+  };
+
+  useEffect(() => {
+    const fetchLatestBooks = async () => {
+      try {
+        const response = await fetch('/books/latest');
+        const data = await response.json();
+        dispatch(setRecentlyAddedBooks(data));
+      } catch (error) {
+        console.error('Failed to fetch latest books:', error);
+      }
+    };
+
+    fetchLatestBooks();
+  }, [dispatch]);
+
   return (
     <>
       <div className="grid grid-cols-2 justify-between items-center h-[calc(100vh-80px)] max-w-7xl mx-auto">
@@ -24,6 +47,14 @@ export default function Home() {
           </div>
           <Button className="mt-5 bg-blue-800 w-full h-8">Learn more</Button>
         </div>
+      </div>
+      <div>
+        <h2>Latest Books:</h2>
+        <ul>
+          {recentlyAddedBooks.map((book) => (
+            <li key={book._id}>{book.title}</li>
+          ))}
+        </ul>
       </div>
       <div className="mb-96">
         <div>

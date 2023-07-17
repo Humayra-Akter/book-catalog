@@ -84,7 +84,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
       <Button
         variant="outline"
         type="button"
-        className="flex items-center bg-blue-800 justify-between"
+        className="items-center bg-slate-200 justify-between"
       >
         <p>Google</p>
         <FcGoogle />

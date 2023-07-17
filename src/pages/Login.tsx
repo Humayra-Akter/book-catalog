@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/technet-logo-white.png';
+import loginImg from '@/assets/images/login.jpg';
 import { LoginForm } from '@/components/LoginForm';
 
 export default function Login() {
@@ -21,8 +22,8 @@ export default function Login() {
           <div
             className="absolute inset-0 bg-cover"
             style={{
-              backgroundImage:
-                'url(https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80)',
+              background: `url(${loginImg})`,
+              backgroundSize: 'cover',
             }}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
