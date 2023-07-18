@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cart/cartSlice';
+import { addBook } from '@/redux/features/wishlist/wishlistSlice';
 
 interface IProps {
   book: IBook;
@@ -11,12 +12,28 @@ interface IProps {
 
 export default function BookCard({ book }: IProps) {
   const dispatch = useDispatch();
+
   const handleAddBook = (book: IBook) => {
     dispatch(addToCart(book));
     toast({
       description: 'Book Added',
     });
   };
+
+const handleAddWishlist = (book: IBook) => {
+  const wishlistBook: IBook = {
+    _id: book._id,
+    title: book.title,
+    author: book.author,
+    status: 'wishlist',
+  };
+  dispatch(addBook(wishlistBook));
+  toast({
+    description: 'Book Added to Wishlist',
+  });
+};
+
+
 
   return (
     <div>
@@ -38,6 +55,13 @@ export default function BookCard({ book }: IProps) {
           onClick={() => handleAddBook(book)}
         >
           Add to cart
+        </Button>
+        <Button
+          className="w-full h-6 bg-blue-800"
+          variant="default"
+          onClick={() => handleAddWishlist(book)}
+        >
+          Add to wishlist
         </Button>
       </div>
     </div>

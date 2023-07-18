@@ -1,4 +1,5 @@
 import { api } from '@/redux/api/apiSlice';
+import { IBook } from '@/types/globalTypes';
 
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +9,7 @@ const bookApi = api.injectEndpoints({
     singleBook: builder.query({
       query: (id) => `/book/${id}`,
     }),
-    postBook: builder.mutation({
+    postBook: builder.mutation<IBook, Partial<IBook>>({
       query: (data) => ({
         url: '/addBook',
         method: 'POST',
@@ -16,7 +17,6 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ['books'],
     }),
-
     postComment: builder.mutation({
       query: ({ id, data }) => ({
         url: `/comment/${id}`,

@@ -17,8 +17,8 @@ export default function Checkout() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10 text-primary">
-      <div className="max-w-3xl w-full">
+    <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10">
+      {/* <div className="max-w-3xl w-full">
         <h1 className="mb-2">Delivery Information</h1>
         <div className="h-[60vh] border border-gray-300 rounded-md p-10 overflow-auto">
           <div className="flex gap-5">
@@ -92,9 +92,14 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="max-w-lg w-full">
-        <h1 className="mb-2">Order Summery</h1>
+        <h1
+          className="mb-2 text-2xl uppercase text-center
+          py-6 text-blue-900 font-bold"
+        >
+          Order Summery
+        </h1>
         <div className="border border-gray-300 rounded-md h-[60vh] p-10 flex flex-col">
           <div className="flex-grow  mb-2 space-y-2 overflow-auto">
             {books.map((book) => (

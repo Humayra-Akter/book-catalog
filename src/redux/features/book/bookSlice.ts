@@ -13,6 +13,13 @@ interface IBook {
   recentlyAddedBooks: string[];
   addingBook: boolean;
   error: string | null;
+  title: string;
+  author: string;
+  genre: string;
+  price: number;
+  rating: number;
+  features: string;
+  quantity: number;
 }
 
 const initialState: IBook = {
@@ -23,6 +30,13 @@ const initialState: IBook = {
   recentlyAddedBooks: [],
   addingBook: false,
   error: null,
+  title: '',
+  author: '',
+  genre: '',
+  price: 0,
+  rating: 0,
+  features: '',
+  quantity: 0,
 };
 
 const bookSlice = createSlice({
@@ -51,29 +65,58 @@ const bookSlice = createSlice({
         state.recentlyAddedBooks[index] = _id;
       }
     },
-    addBookRequest: (
-      state,
-      action: PayloadAction<{ title: string; author: string }>
-    ) => {
-      const { title, author } = action.payload;
+    addBookRequest: (state, action: PayloadAction<IBook>) => {
+      const {
+        title,
+        author,
+        genre,
+        publication_date,
+        price,
+        rating,
+        status,
+        features,
+        quantity,
+      } = action.payload;
       const newBook = {
         _id: generateUniqueId(),
         title,
         author,
+        genre,
+        publication_date,
+        price,
+        rating,
+        status,
+        features,
+        quantity,
       };
       state.recentlyAddedBooks.push(newBook._id);
     },
-    editBookRequest: (
-      state,
-      action: PayloadAction<{ _id: string; title: string; author: string }>
-    ) => {
-      const { _id, title, author } = action.payload;
+    editBookRequest: (state, action: PayloadAction<IBook>) => {
+      const {
+        _id,
+        title,
+        author,
+        genre,
+        publication_date,
+        price,
+        rating,
+        status,
+        features,
+        quantity,
+      } = action.payload;
       const index = state.recentlyAddedBooks.findIndex((id) => id === _id);
       if (index !== -1) {
         const updatedBook = {
           _id,
           title,
           author,
+          genre,
+          publication_date,
+          price,
+          rating,
+          status,
+          features,
+          quantity,
         };
         state.recentlyAddedBooks[index] = updatedBook._id;
       }

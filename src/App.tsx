@@ -23,7 +23,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="bg-blue-100">
+    <div className="bg-blue-100 screen">
       <Toaster />
       <MainLayout />
     </div>

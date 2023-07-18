@@ -3,36 +3,50 @@ import { usePostBookMutation } from '../redux/features/book/bookApi';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import loginImg from '../../src/assets/images/banner.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { useToast } from '@/components/ui/use-toast';
 
 export const AddBookForm = () => {
+  // const book = useSelector((state) => state.book);
+  const [postBook, { isLoading, isError, error }] = usePostBookMutation();
+
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publicationYear, setPublicationYear] = useState('');
   const [genre, setGenre] = useState('');
+  const [price, setPrice] = useState('');
+  const [rating, setRating] = useState('');
+  const [status, setStatus] = useState('');
+  const [features, setFeatures] = useState('');
+  const [quantity, setQuantity] = useState('');
 
-  const [postBook, { isLoading, isError, error }] = usePostBookMutation();
-
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const newBook = {
+      title,
+      author,
+      genre,
+      publication_date: publicationYear,
+      price: Number(price),
+      rating: Number(rating),
+      status: status === 'true',
+      features: features.split(','),
+      quantity: Number(quantity),
+    };
+
     try {
-      const response = await fetch('http://localhost:5000/addBook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, author, publicationYear, genre }),
+      const response = await postBook(newBook).unwrap();
+      toast({
+        description: 'Book added successfully',
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log('Book added successfully');
-      } else {
-        console.error('Failed to add book:', data.error);
-      }
     } catch (error) {
-      console.error('Error adding book:', error);
+      toast({
+        description: 'Error adding book',
+      });
     }
   };
 
@@ -61,6 +75,7 @@ export const AddBookForm = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             autoCorrect="off"
+            required
           />
           <Input
             id="title"
@@ -70,28 +85,93 @@ export const AddBookForm = () => {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             autoCorrect="off"
+            required
           />
           <Input
             id="title"
             className="border-blue-800"
             placeholder="publication year of the book"
-            type="text"
+            max={2023}
+            min={1800}
             value={publicationYear}
             onChange={(e) => setPublicationYear(e.target.value)}
             autoCorrect="off"
+            required
           />
           <Input
             id="title"
             className="border-blue-800"
-            placeholder="publication year of the book"
+            placeholder="genre of the book"
             type="text"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
             autoCorrect="off"
+            required
           />
-          <Button className="items-center bg-blue-800 w-full h-8" type="submit">
+          <Input
+            id="title"
+            className="border-blue-800"
+            placeholder="price of the book 30-150"
+            type="number"
+            value={price}
+            max={150}
+            min={30}
+            onChange={(e) => setPrice(e.target.value)}
+            autoCorrect="off"
+            required
+          />
+          <Input
+            id="title"
+            className="border-blue-800"
+            placeholder="Rate the book from 0-5"
+            type="number"
+            max={5}
+            min={0}
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            autoCorrect="off"
+            required
+          />
+          <Input
+            id="title"
+            className="border-blue-800"
+            placeholder="in stock or not"
+            type="boolean"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            autoCorrect="off"
+            required
+          />
+          <Input
+            id="title"
+            className="border-blue-800"
+            placeholder="features of the book"
+            type="text"
+            value={features}
+            onChange={(e) => setFeatures(e.target.value)}
+            autoCorrect="off"
+            required
+          />
+          <Input
+            id="title"
+            className="border-blue-800"
+            placeholder="quantity of the book"
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            autoCorrect="off"
+            required
+          />
+          <Button type="submit" className="items-center bg-blue-800 w-full h-8">
             Add Book
           </Button>
+          {/* <Button
+            onClick={handleEditBook}
+            className="items-center bg-blue-800 w-full h-8"
+            type="submit"
+          >
+            Edit Book
+          </Button> */}
         </form>
       </div>
     </div>

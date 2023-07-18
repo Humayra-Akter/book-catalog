@@ -1,3 +1,4 @@
+import { IBook } from '@/types/globalTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Book {
