@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addBook,
@@ -16,25 +16,21 @@ export default function WishlistPage() {
   const books = useSelector((state: RootState) => state.wishlist.books);
   const dispatch = useDispatch();
 
-  function generateId() {
-    return String(Date.now());
-  }
-
   const handleAddBook = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const newBook = {
-      _id: generateId(),
+      _id: '',
       title,
       author,
-      status: 'wishlist' as 'wishlist' | 'reading' | 'finished',
+      statuss: 'wishlist' as 'wishlist' | 'reading' | 'finished',
     };
     dispatch(addBook(newBook));
     setTitle('');
     setAuthor('');
   };
 
-  const handleUpdateStatus = (id: string, status: 'reading' | 'finished') => {
-    dispatch(updateBookStatus({ id, status }));
+  const handleUpdateStatus = (id: string, statuss: 'reading' | 'finished') => {
+    dispatch(updateBookStatus({ id, statuss }));
   };
 
   const handleRemoveBook = (id: string) => {
@@ -87,7 +83,7 @@ export default function WishlistPage() {
             className="text-xl font-bold py-9 text-center uppercase"
           >
             {book.title} by {book.author}
-            {book.status === 'wishlist' && (
+            {book.statuss === 'wishlist' && (
               <div className="flex mx-28 pt-7 space-x-24">
                 <Button
                   className="items-center bg-blue-800 w-full h-8"
@@ -104,7 +100,7 @@ export default function WishlistPage() {
                 </Button>
               </div>
             )}
-            {book.status === 'reading' && (
+            {book.statuss === 'reading' && (
               <div className="flex  mx-28 pt-7 space-x-24">
                 <Button
                   className="items-center bg-blue-800 w-full h-8"
@@ -120,7 +116,7 @@ export default function WishlistPage() {
                 </Button>
               </div>
             )}
-            {book.status === 'finished' && (
+            {book.statuss === 'finished' && (
               <Button
                 className="items-center bg-red-800 space-x-1 w-1/2 h-8"
                 onClick={() => handleRemoveBook(book._id)}

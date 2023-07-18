@@ -1,12 +1,11 @@
 import BookReview from '@/components/BookReview';
 import { Button } from '@/components/ui/button';
 import { useSingleBookQuery } from '@/redux/features/book/bookApi';
-import { ReactElement, JSXElementConstructor, ReactFragment, Key } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function BookDetails() {
   const { id } = useParams();
-  const { data: book, isLoading, error } = useSingleBookQuery(id);
+  const { data: book } = useSingleBookQuery(id);
 
   return (
     <>

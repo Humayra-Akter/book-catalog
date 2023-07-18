@@ -1,5 +1,5 @@
 export interface IBook {
-  _id: number;
+  _id: string;
   title: string;
   author: string;
   genre: string;
@@ -7,6 +7,7 @@ export interface IBook {
   price: number;
   rating: number;
   status: boolean;
+  statuss?: 'wishlist' | 'reading' | 'finished' | undefined;
   features: string[];
   quantity?: number;
 }

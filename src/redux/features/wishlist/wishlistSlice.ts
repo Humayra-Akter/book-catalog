@@ -1,11 +1,10 @@
-import { IBook } from '@/types/globalTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Book {
   _id: string;
   title: string;
   author: string;
-  status: 'wishlist' | 'reading' | 'finished';
+  statuss: 'wishlist' | 'reading' | 'finished';
 }
 
 interface WishlistState {
@@ -25,11 +24,11 @@ const wishlistSlice = createSlice({
     },
     updateBookStatus: (
       state,
-      action: PayloadAction<{ id: string; status: 'reading' | 'finished' }>
+      action: PayloadAction<{ id: string; statuss: 'reading' | 'finished' }>
     ) => {
       const book = state.books.find((b) => b._id === action.payload.id);
       if (book) {
-        book.status = action.payload.status;
+        book.statuss = action.payload.statuss;
       }
     },
     removeBook: (state, action: PayloadAction<string>) => {

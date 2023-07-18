@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-function generateUniqueId() {
-  return Math.random().toString(36).substr(2, 9);
-}
-
 interface IBook {
   _id: string;
   status: boolean;
@@ -78,7 +74,6 @@ const bookSlice = createSlice({
         quantity,
       } = action.payload;
       const newBook = {
-        _id: generateUniqueId(),
         title,
         author,
         genre,
@@ -89,7 +84,7 @@ const bookSlice = createSlice({
         features,
         quantity,
       };
-      state.recentlyAddedBooks.push(newBook._id);
+      state.recentlyAddedBooks.push(newBook.title);
     },
     editBookRequest: (state, action: PayloadAction<IBook>) => {
       const {

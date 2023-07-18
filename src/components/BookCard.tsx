@@ -21,11 +21,11 @@ export default function BookCard({ book }: IProps) {
   };
 
   const handleAddWishlist = (book: IBook) => {
-    const wishlistBook: IBook = {
+    const wishlistBook = {
       _id: book._id,
       title: book.title,
       author: book.author,
-      status: 'wishlist',
+      statuss: 'wishlist' as 'wishlist' | 'reading' | 'finished',
     };
     dispatch(addBook(wishlistBook));
     toast({

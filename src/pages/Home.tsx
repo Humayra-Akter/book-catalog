@@ -14,7 +14,7 @@ export default function Home() {
   const { recentlyAddedBooks } = useAppSelector((state) => state.book) as {
     recentlyAddedBooks: string[];
   };
-  const { data, isLoading, error } = useGetBooksQuery(undefined);
+  const { data } = useGetBooksQuery(undefined);
 
   useEffect(() => {
     if (data?.data) {

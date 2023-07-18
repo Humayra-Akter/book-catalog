@@ -3,14 +3,12 @@ import { usePostBookMutation } from '../redux/features/book/bookApi';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import loginImg from '../../src/assets/images/banner.png';
-import { useDispatch, useSelector } from 'react-redux';
 import { useToast } from '@/components/ui/use-toast';
 
 export const AddBookForm = () => {
   // const book = useSelector((state) => state.book);
-  const [postBook, { isLoading, isError, error }] = usePostBookMutation();
+  const [postBook] = usePostBookMutation();
 
-  const dispatch = useDispatch();
   const { toast } = useToast();
 
   const [title, setTitle] = useState('');
@@ -43,6 +41,7 @@ export const AddBookForm = () => {
       toast({
         description: 'Book added successfully',
       });
+      console.log(response);
     } catch (error) {
       toast({
         description: 'Error adding book',

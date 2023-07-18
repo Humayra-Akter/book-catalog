@@ -2,7 +2,6 @@ import BookCard from '@/components/BookCard';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { useToast } from '@/components/ui/use-toast';
 import { setYearOfPublish, toggleState } from '@/redux/features/book/bookSlice';
 import { IBook } from '@/types/globalTypes';
 import { useGetBooksQuery } from '@/redux/features/book/bookApi';
@@ -10,9 +9,8 @@ import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { setSearchQuery } from '@/redux/features/book/bookSlice';
 
 export default function Books() {
-  const { data, isLoading, error } = useGetBooksQuery(undefined);
+  const { data } = useGetBooksQuery(undefined);
   const { searchQuery } = useAppSelector((state) => state.book);
-  const { toast } = useToast();
 
   const { publication_date, status } = useAppSelector((state) => state.book);
   const dispatch = useAppDispatch();
