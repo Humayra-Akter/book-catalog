@@ -124,7 +124,6 @@ export default function Books() {
             </form>
           </div>
         </div>
-
         <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
           {filteredBooksData?.length ? (
             filteredBooksData.map((book: IBook) => (

@@ -20,24 +20,22 @@ export default function BookCard({ book }: IProps) {
     });
   };
 
-const handleAddWishlist = (book: IBook) => {
-  const wishlistBook: IBook = {
-    _id: book._id,
-    title: book.title,
-    author: book.author,
-    status: 'wishlist',
+  const handleAddWishlist = (book: IBook) => {
+    const wishlistBook: IBook = {
+      _id: book._id,
+      title: book.title,
+      author: book.author,
+      status: 'wishlist',
+    };
+    dispatch(addBook(wishlistBook));
+    toast({
+      description: 'Book Added to Wishlist',
+    });
   };
-  dispatch(addBook(wishlistBook));
-  toast({
-    description: 'Book Added to Wishlist',
-  });
-};
-
-
 
   return (
     <div>
-      <div className="rounded-2xl h-[300px] flex flex-col items-start justify-between p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2 bg-slate-100">
+      <div className="rounded-2xl h-[300px] flex flex-col items-start justify-between p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2 bg-gray-50">
         <Link to={`/book-details/${book._id}`} className="w-full">
           <h1 className="text-xl text-blue-900 font-bold">{book?.title}</h1>
         </Link>

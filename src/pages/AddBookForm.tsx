@@ -135,7 +135,7 @@ export const AddBookForm = () => {
           <Input
             id="title"
             className="border-blue-800"
-            placeholder="in stock or not"
+            placeholder="in stock? yes or no"
             type="boolean"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
@@ -162,16 +162,20 @@ export const AddBookForm = () => {
             autoCorrect="off"
             required
           />
-          <Button type="submit" className="items-center bg-blue-800 w-full h-8">
-            Add Book
-          </Button>
-          {/* <Button
-            onClick={handleEditBook}
-            className="items-center bg-blue-800 w-full h-8"
-            type="submit"
-          >
-            Edit Book
-          </Button> */}
+          <div className="flex gap-5">
+            <Button
+              type="submit"
+              className="items-center bg-blue-800 w-full h-8"
+            >
+              Add Book
+            </Button>
+            <Button
+              className="items-center bg-blue-800 w-full h-8"
+              type="submit"
+            >
+              Edit Book
+            </Button>
+          </div>
         </form>
       </div>
     </div>
