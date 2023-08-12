@@ -5,12 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase.init';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '@/redux/features/user/userSlice';
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
-
 interface LoginFormInputs {
   email: string;
   password: string;
@@ -40,6 +41,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
     }
   }, [user.email, isLoading]);
 
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -84,7 +86,8 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
       <Button
         variant="outline"
         type="button"
-        className="items-center bg-slate-200 justify-between"
+        onClick={() => signInWithGoogle()}
+        className="items-center justify-between"
       >
         <p>Google</p>
         <FcGoogle />
